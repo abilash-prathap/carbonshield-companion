@@ -1,70 +1,50 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
-  PlusCircle,
-  ListTodo,
-  Award,
-  BarChart3,
+  Clock,
+  Users,
+  Leaf,
+  Calendar,
   Zap,
+  Award,
+  FileText,
+  Bell,
   Settings,
   Shield,
-  Leaf,
+  Bot,
+  LogOut,
   ChevronRight,
-  Sparkles,
+  TrendingDown,
   Layers,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 export function Sidebar({ mobileOpen, setMobileOpen }) {
-  const { user, points, tasks, currentRegion } = useApp();
-
-  const navItems = [
-    {
-      to: '/dashboard',
-      label: 'Home Dashboard',
-      icon: LayoutDashboard,
-    },
-    {
-      to: '/submit',
-      label: 'Submit AI Task',
-      icon: PlusCircle,
-      badge: 'New',
-    },
-    {
-      to: '/tasks',
-      label: 'My Tasks',
-      icon: ListTodo,
-      counter: tasks.filter((t) => t.status !== 'completed' && t.status !== 'cancelled').length,
-    },
-    {
-      to: '/points',
-      label: 'Green Points',
-      icon: Award,
-      badge: `${points.toLocaleString()} pts`,
-      badgeColor: 'bg-emerald-100 text-emerald-800 font-bold',
-    },
-    {
-      to: '/analytics',
-      label: 'Company Analytics',
-      icon: BarChart3,
-    },
-    {
-      to: '/grid',
-      label: 'Grid Status',
-      icon: Zap,
-      pulse: currentRegion.status === 'clean',
-    },
-    {
-      to: '/settings',
-      label: 'Settings',
-      icon: Settings,
-    },
-  ];
+  const { user, logout } = useApp();
+  const navigate = useNavigate();
 
   const handleNavClick = () => {
     if (setMobileOpen) setMobileOpen(false);
   };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
+  const navItems = [
+    { to: '/', label: 'Overview', icon: LayoutDashboard },
+    { to: '/chat', label: 'Submit AI Task', icon: Bot, badge: 'AI Chat' },
+    { to: '/tasks', label: 'Working Hours', icon: Clock, counter: 2 },
+    { to: '/analytics', label: 'Employees', icon: Users },
+    { to: '/analytics', label: 'AI Sustainability', icon: Leaf },
+    { to: '/tasks', label: 'Carbon Scheduler', icon: Calendar },
+    { to: '/analytics', label: 'Company Efficiency', icon: Zap },
+    { to: '/rewards', label: 'Green Points', icon: Award },
+    { to: '/analytics', label: 'Reports', icon: FileText },
+    { to: '/settings', label: 'Settings', icon: Settings },
+  ];
 
   return (
     <>
@@ -78,149 +58,121 @@ export function Sidebar({ mobileOpen, setMobileOpen }) {
 
       {/* Sidebar container */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-40 w-64 bg-white border-r border-slate-200/90 flex flex-col justify-between transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+        className={`fixed top-0 bottom-0 left-0 z-40 w-64 bg-white border-r border-[#E2E8F0] flex flex-col justify-between transition-transform duration-300 ease-in-out lg:translate-x-0 ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        {/* Top: Logo & Brand */}
-        <div>
-          <div className="p-5 border-b border-slate-100 flex items-center justify-between">
-            <NavLink to="/dashboard" onClick={handleNavClick} className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-700 to-teal-800 flex items-center justify-center text-white shadow-sm shadow-emerald-900/20 group-hover:scale-105 transition-transform">
-                <Shield className="w-5 h-5 text-emerald-200 fill-emerald-300/20" />
+        {/* Top Section */}
+        <div className="flex-1 overflow-y-auto">
+          {/* Logo & Brand Header */}
+          <div className="p-5 border-b border-[#E2E8F0]">
+            <NavLink to="/" onClick={handleNavClick} className="flex items-center gap-3 group">
+              <div className="w-10 h-10 rounded-xl bg-[#123C2D] flex items-center justify-center text-white shadow-xs group-hover:scale-105 transition-transform">
+                <Shield className="w-5 h-5 text-emerald-400 fill-emerald-400/20" />
               </div>
               <div>
-                <div className="flex items-center gap-1.5">
-                  <span className="font-extrabold text-slate-900 text-base tracking-tight">CarbonShield</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-teal-800">COMPANION</span>
-                  <span className="text-[9px] px-1 py-0.2 rounded bg-emerald-50 text-emerald-800 font-semibold border border-emerald-200">
-                    S26
-                  </span>
-                </div>
+                <h2 className="font-extrabold text-[#0B1220] text-base tracking-tight font-heading leading-tight">
+                  CarbonShield
+                </h2>
+                <p className="text-[11px] font-semibold text-[#64748B] leading-tight">
+                  Company Console
+                </p>
               </div>
             </NavLink>
           </div>
 
-          {/* User mini status */}
-          <div className="px-5 py-3.5 bg-slate-50/80 border-b border-slate-100">
-            <div className="flex items-center gap-2.5">
+          {/* Navigation Section */}
+          <div className="p-3">
+            <div className="px-3 pt-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400 font-heading">
+              Carbon Orchestration
+            </div>
+
+            <nav className="space-y-1">
+              {navItems.map((item, idx) => (
+                <NavLink
+                  key={`${item.to}-${idx}`}
+                  to={item.to}
+                  end={item.to === '/'}
+                  onClick={handleNavClick}
+                  className={({ isActive }) =>
+                    `flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all group ${
+                      isActive
+                        ? 'bg-[#123C2D] text-white shadow-xs'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
+                    }`
+                  }
+                >
+                  {({ isActive }) => (
+                    <>
+                      <div className="flex items-center gap-3 min-w-0">
+                        <item.icon
+                          className={`w-4 h-4 shrink-0 transition-colors ${
+                            isActive
+                              ? 'text-emerald-300'
+                              : 'text-slate-400 group-hover:text-[#123C2D]'
+                          }`}
+                        />
+                        <span className="truncate">{item.label}</span>
+                      </div>
+
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        {item.badge && (
+                          <span
+                            className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                              isActive
+                                ? 'bg-emerald-500/20 text-emerald-300'
+                                : 'bg-emerald-100 text-[#123C2D]'
+                            }`}
+                          >
+                            {item.badge}
+                          </span>
+                        )}
+                        {item.counter && (
+                          <span
+                            className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
+                              isActive
+                                ? 'bg-white/20 text-white'
+                                : 'bg-rose-100 text-rose-700'
+                            }`}
+                          >
+                            {item.counter}
+                          </span>
+                        )}
+                      </div>
+                    </>
+                  )}
+                </NavLink>
+              ))}
+            </nav>
+          </div>
+        </div>
+
+        {/* Bottom User Card (Faithful to Screenshot) */}
+        <div className="p-3 border-t border-[#E2E8F0] bg-slate-50/60">
+          <div className="p-2.5 rounded-2xl bg-white border border-[#E2E8F0] shadow-2xs flex items-center justify-between gap-2.5">
+            <div className="flex items-center gap-2.5 min-w-0">
               <img
                 src={user.avatar}
                 alt={user.name}
-                className="w-8 h-8 rounded-full object-cover ring-2 ring-emerald-500/30"
+                className="w-9 h-9 rounded-full object-cover ring-2 ring-emerald-500/20 shrink-0"
               />
-              <div className="min-w-0 flex-1">
-                <div className="text-xs font-bold text-slate-800 truncate">{user.name}</div>
-                <div className="text-[11px] text-emerald-700 font-semibold flex items-center gap-1">
-                  <Sparkles className="w-3 h-3 text-emerald-600" />
-                  <span>{user.tier}</span>
+              <div className="min-w-0">
+                <div className="text-xs font-bold text-[#0B1220] truncate">
+                  {user.name}
+                </div>
+                <div className="text-[11px] text-[#64748B] truncate">
+                  {user.role}
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Navigation Links */}
-          <nav className="p-3 space-y-1">
-            <div className="px-3 pt-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-              Platform Menu
-            </div>
-
-            {navItems.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                onClick={handleNavClick}
-                className={({ isActive }) =>
-                  `flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all group ${
-                    isActive
-                      ? 'bg-emerald-800 text-white shadow-xs shadow-emerald-900/10'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80'
-                  }`
-                }
-              >
-                {({ isActive }) => (
-                  <>
-                    <div className="flex items-center gap-3">
-                      <item.icon
-                        className={`w-4 h-4 transition-colors ${
-                          isActive
-                            ? 'text-emerald-300'
-                            : 'text-slate-400 group-hover:text-emerald-700'
-                        }`}
-                      />
-                      <span>{item.label}</span>
-                    </div>
-
-                    <div className="flex items-center gap-1.5">
-                      {item.badge && (
-                        <span
-                          className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
-                            isActive
-                              ? 'bg-emerald-700 text-emerald-100'
-                              : item.badgeColor || 'bg-slate-200/80 text-slate-700'
-                          }`}
-                        >
-                          {item.badge}
-                        </span>
-                      )}
-
-                      {item.counter !== undefined && item.counter > 0 && (
-                        <span
-                          className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
-                            isActive
-                              ? 'bg-emerald-700 text-emerald-100'
-                              : 'bg-emerald-100 text-emerald-800'
-                          }`}
-                        >
-                          {item.counter}
-                        </span>
-                      )}
-
-                      {item.pulse && (
-                        <span className="relative flex h-2 w-2">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-                        </span>
-                      )}
-                    </div>
-                  </>
-                )}
-              </NavLink>
-            ))}
-          </nav>
-        </div>
-
-        {/* Sidebar Footer: Grid Telemetry Widget */}
-        <div className="p-4 border-t border-slate-100 bg-slate-50/50">
-          <NavLink
-            to="/grid"
-            onClick={handleNavClick}
-            className="block p-3 rounded-xl bg-white border border-slate-200 hover:border-emerald-300 transition-colors group"
-          >
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wide">
-                Live Grid Signal
-              </span>
-              <span className="flex items-center gap-1 text-[11px] font-bold text-emerald-700">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                {currentRegion.currentIntensity} gCO₂/kWh
-              </span>
-            </div>
-            <div className="text-xs font-semibold text-slate-800 mt-1 truncate">
-              {currentRegion.name}
-            </div>
-            <div className="text-[11px] text-slate-500 mt-0.5 flex items-center justify-between">
-              <span>Next Window:</span>
-              <strong className="text-teal-700 font-bold">{currentRegion.nextWindowIn}</strong>
-            </div>
-          </NavLink>
-
-          <div className="mt-3 text-center">
-            <span className="text-[10px] text-slate-400">
-              SUSTAINATHON26 · Carbon-Aware AI
-            </span>
+            <button
+              onClick={handleLogout}
+              title="Sign Out"
+              className="p-1.5 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors shrink-0 cursor-pointer"
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
           </div>
         </div>
       </aside>

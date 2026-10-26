@@ -5,7 +5,7 @@ import {
   BarChart3,
   TrendingDown,
   Zap,
-  DollarSign,
+  Sun,
   Users,
   Award,
   Layers,
@@ -89,14 +89,14 @@ export default function Analytics() {
         />
 
         <StatCard
-          title="Cost Reduced"
-          value={`$${summary.totalCostSavedUsd.toLocaleString()}`}
-          subtitle="Cloud compute savings"
-          icon={DollarSign}
+          title="Clean Grid Alignment"
+          value="88.2%"
+          subtitle="Renewable hours matched"
+          icon={Sun}
           accentColor="sky"
           trend={28.4}
-          trendLabel="budget saved"
-          tooltip="Off-peak spot pricing & smaller memory tiers"
+          trendLabel="clean sync rate"
+          tooltip="Shifted workloads to solar & offshore wind peaks"
           isSimulated={true}
         />
 

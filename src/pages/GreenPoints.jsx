@@ -41,7 +41,7 @@ export default function GreenPoints() {
   const rewards = [
     {
       id: 'rew-1',
-      name: '$25 Cloud Compute Credit',
+      name: 'Cloud Compute Hours Voucher (50 Hrs)',
       provider: 'AWS / Google Cloud / Lambda Labs',
       category: 'Compute Voucher',
       pointsCost: 500,
@@ -81,11 +81,11 @@ export default function GreenPoints() {
     },
     {
       id: 'rew-5',
-      name: '$50 API Credit for Eco-Models',
+      name: 'API Inference Tokens for Eco-Models (1M Tokens)',
       provider: 'OpenRouter & Mistral AI',
       category: 'Compute Voucher',
       pointsCost: 1200,
-      description: 'Credits dedicated for testing and benchmarking quantized open-weights models.',
+      description: 'Tokens dedicated for testing and benchmarking quantized open-weights models.',
       icon: Zap,
       tag: 'Developer',
     },

@@ -9,7 +9,7 @@ import {
   Shield,
   Layers,
   Leaf,
-  DollarSign,
+  Sun,
   ArrowRight,
   CheckCircle2,
   AlertCircle,
@@ -448,11 +448,11 @@ export default function SubmitTask() {
 
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-slate-600 flex items-center gap-1.5">
-                      <DollarSign className="w-3.5 h-3.5 text-sky-600" />
-                      Estimated Cost:
+                      <Sun className="w-3.5 h-3.5 text-amber-500" />
+                      Clean Energy Sync:
                     </span>
-                    <span className="font-bold text-slate-800">
-                      ${recommendation.metrics.estimatedCostUsd}
+                    <span className="font-bold text-emerald-800">
+                      89.4% Renewable
                     </span>
                   </div>
 

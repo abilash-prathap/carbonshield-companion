@@ -2,17 +2,17 @@
 // When connecting to the Python FastAPI backend, real API responses replace these.
 
 export const INITIAL_USER = {
-  name: "Elena Rostova",
-  role: "Senior AI Engineer",
-  email: "elena.rostova@acme-corp.ai",
-  department: "Applied ML & LLMs",
+  name: "Elena Vance",
+  role: "Sustainability Lead",
+  email: "elena.vance@acme-enterprise.ai",
+  department: "Carbon & AI Governance",
   avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
-  organization: "Acme Corp Tech",
+  organization: "Acme Enterprise",
   tier: "Eco Pioneer",
   tierLevel: 2,
   nextTier: "Carbon Guardian",
   tierThreshold: 3000,
-  points: 2450,
+  points: 68450,
   joinedDate: "Feb 2026",
   defaultRegion: "eu-west-1",
   autoDeferEnabled: true,

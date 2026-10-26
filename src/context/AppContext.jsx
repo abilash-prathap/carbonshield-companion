@@ -13,6 +13,10 @@ const AppContext = createContext();
 export function AppProvider({ children }) {
   const [demoMode, setDemoModeState] = useState(getStoredDemoMode());
   const [user, setUser] = useState(INITIAL_USER);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const saved = localStorage.getItem('cs_authenticated');
+    return saved !== null ? saved === 'true' : true; // Default logged in for seamless demo
+  });
   const [tasks, setTasks] = useState(INITIAL_TASKS);
   const [points, setPoints] = useState(INITIAL_USER.points);
   const [pointsHistory, setPointsHistory] = useState(GREEN_POINTS_HISTORY);
@@ -20,16 +24,33 @@ export function AppProvider({ children }) {
   const [toasts, setToasts] = useState([]);
   const [backendStatus, setBackendStatus] = useState({ online: false, mode: 'demo' });
 
+  const login = (email, password) => {
+    setIsAuthenticated(true);
+    localStorage.setItem('cs_authenticated', 'true');
+    setUser((prev) => ({
+      ...prev,
+      email: email || prev.email,
+    }));
+    addToast('Welcome to CarbonShield', `Signed in as ${user.name} (${user.role})`, 'success');
+    return true;
+  };
+
+  const logout = () => {
+    setIsAuthenticated(false);
+    localStorage.setItem('cs_authenticated', 'false');
+    addToast('Logged out', 'You have been signed out safely.', 'info');
+  };
+
   // Update demo mode
   const setDemoMode = (enabled) => {
     setDemoModeState(enabled);
     setStoredDemoMode(enabled);
     api.setDemoMode(enabled);
     addToast(
-      enabled ? 'Demo Mode Enabled' : 'Live FastAPI Mode Enabled',
+      enabled ? 'Demo Mode Enabled' : 'Live Mode Enabled',
       enabled
-        ? 'Using isolated simulated datasets for hackathon presentation.'
-        : 'Connecting directly to Python FastAPI at ' + api.baseUrl,
+        ? 'Using simulated enterprise telemetry.'
+        : 'Connecting to live orchestration layer.',
       enabled ? 'info' : 'warning'
     );
   };
@@ -66,6 +87,7 @@ export function AppProvider({ children }) {
         ...prev,
       ]);
     }
+    addToast('AI Task Scheduled!', `Queued for cleanest regional window: ${newTask.scheduledFor}`, 'success');
   };
 
   // Update task status (cancel, reschedule, run now)
@@ -104,7 +126,7 @@ export function AppProvider({ children }) {
       },
       ...prev,
     ]);
-    addToast('Reward Claimed! 🎁', `Successfully redeemed ${reward.name}. Check your email for voucher code.`, 'success');
+    addToast('Reward Claimed! 🎁', `Successfully redeemed ${reward.name}.`, 'success');
     return true;
   };
 
@@ -113,6 +135,9 @@ export function AppProvider({ children }) {
   return (
     <AppContext.Provider
       value={{
+        isAuthenticated,
+        login,
+        logout,
         demoMode,
         setDemoMode,
         user,

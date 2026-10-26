@@ -2,17 +2,13 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { Topbar } from './Topbar';
-import { DemoNoticeBanner } from './DemoNoticeBanner';
 import { ToastContainer } from './Toast';
 
 export function Layout() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-800">
-      {/* Disclaimer / Demo Notice */}
-      <DemoNoticeBanner />
-
+    <div className="min-h-screen bg-[#F4F7FB] flex flex-col font-['Inter',sans-serif] text-[#0B1220]">
       <div className="flex-1 flex">
         {/* Navigation Sidebar */}
         <Sidebar mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} />
@@ -26,13 +22,13 @@ export function Layout() {
           </main>
 
           {/* Simple Clean Footer */}
-          <footer className="px-6 py-4 border-t border-slate-200/70 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2 max-w-7xl w-full mx-auto">
+          <footer className="px-6 py-4 border-t border-[#E2E8F0] text-xs text-[#64748B] flex flex-col sm:flex-row items-center justify-between gap-2 max-w-7xl w-full mx-auto">
             <div>
-              <strong>CarbonShield Companion</strong> · Carbon-Aware AI Platform for SUSTAINATHON26
+              <strong className="text-[#0B1220]">CarbonShield Company Console</strong> · Enterprise Carbon-Aware AI Computing
             </div>
-            <div className="flex items-center gap-4 text-slate-500">
-              <span>Python FastAPI + MongoDB + Supabase Integration Layer</span>
-              <span>v1.0.0</span>
+            <div className="flex items-center gap-4 text-slate-400">
+              <span>Scope 2 & 3 Compliance</span>
+              <span>v2.4.0</span>
             </div>
           </footer>
         </div>
