@@ -2,7 +2,7 @@
   "name": "carbonshield-companion",
   "private": true,
   "version": "1.0.0",
-  "description": "Carbon-aware AI computing platform for SUSTAINATHON26",
+  "description": "Carbon-aware AI companion for Powerhouse teams",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -17,11 +17,13 @@
     "react",
     "vite",
     "tailwindcss",
-    "sustainathon26"
+    "powerhouse"
   ],
   "author": "CarbonShield Companion Team",
   "license": "MIT",
   "dependencies": {
+    "canvas-confetti": "^1.9.3",
+    "framer-motion": "^12.23.24",
     "lucide-react": "^1.52.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
@@ -32,6 +34,7 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
+    "tailwindcss": "^4.3.3",
     "vite": "^8.3.0"
   }
 }
